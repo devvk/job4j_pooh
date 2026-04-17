@@ -58,7 +58,7 @@ class QueueSchemaTest {
         var count = new CountDownLatch(1);
         queue.addReceiver(new TextReceiver(count, "weather", result));
         queue.publish(new Message("weather", "18"));
-        queue.publish(new Message("city", "Moskow"));
+        queue.publish(new Message("city", "Moscow"));
         var thread = new Thread(queue);
         thread.start();
         count.await();
