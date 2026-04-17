@@ -48,7 +48,7 @@ class TopicSchemaTest {
         var count = new CountDownLatch(1);
         topic.addReceiver(new TextReceiver(count, "weather", result));
         topic.publish(new Message("weather", "18"));
-        topic.publish(new Message("city", "Moskow"));
+        topic.publish(new Message("city", "Moscow"));
         var thread = new Thread(topic);
         thread.start();
         count.await();
@@ -77,5 +77,4 @@ class TopicSchemaTest {
         assertThat(outFirst).containsOnly("23", "20");
         assertThat(outSecond).containsOnly("23", "20");
     }
-
 }

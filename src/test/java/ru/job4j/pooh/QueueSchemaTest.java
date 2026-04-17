@@ -115,8 +115,8 @@ class QueueSchemaTest {
         count.await();
         thread.interrupt();
         assertThat(firstOut.size()).isEqualTo(1);
-        assertThat(firstOut.iterator().next()).isIn("23", "20");
+        assertThat(firstOut.getFirst()).isIn("23", "20");
         assertThat(secondOut.size()).isEqualTo(1);
-        assertThat(secondOut.iterator().next()).isIn("23", "20");
+        assertThat(secondOut.getFirst()).isIn("23", "20");
     }
 }
