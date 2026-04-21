@@ -20,6 +20,7 @@ class QueueSchemaTest {
         queue.publish(new Message("weather", "18"));
         var thread = new Thread(queue);
         thread.start();
+        // ждёт, пока count станет 0
         count.await();
         thread.interrupt();
         assertThat(result).contains("18");

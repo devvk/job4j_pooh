@@ -35,14 +35,10 @@ public class PoohServer {
                             var text = details[2];
                             if (action.equals("intro")) {
                                 if (name.equals("queue")) {
-                                    queueSchema.addReceiver(
-                                            new SocketReceiver(text, new PrintWriter(out))
-                                    );
+                                    queueSchema.addReceiver(new SocketReceiver(text, new PrintWriter(out)));
                                 }
                                 if (name.equals("topic")) {
-                                    topicSchema.addReceiver(
-                                            new SocketReceiver(text, new PrintWriter(out))
-                                    );
+                                    topicSchema.addReceiver(new SocketReceiver(text, new PrintWriter(out)));
                                 }
                             }
                             if (action.equals("queue")) {

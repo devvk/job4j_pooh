@@ -21,23 +21,27 @@ public class QueueSchema implements Schema {
         condition.on();
     }
 
+    /**
+     * Для каждой очереди отдельно берёт её сообщения
+     * и раздаёт их подписчикам этой же очереди по кругу.
+     */
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            for (var queueKey : receivers.keySet()) {
-                var queue = data.getOrDefault(queueKey, new LinkedBlockingQueue<>());
-                var receiversByQueue = receivers.get(queueKey);
-                var it = receiversByQueue.iterator();
-                while (it.hasNext()) {
+            for (var name : receivers.keySet()) {
+                var queue = data.getOrDefault(name, new LinkedBlockingQueue<>());
+                var receiversList = receivers.get(name);
+                var iterator = receiversList.iterator();
+                while (iterator.hasNext()) {
                     var data = queue.poll();
                     if (data != null) {
-                        it.next().receive(data);
+                        iterator.next().receive(data);
                     }
                     if (data == null) {
                         break;
                     }
-                    if (!it.hasNext()) {
-                        it = receiversByQueue.iterator();
+                    if (!iterator.hasNext()) {
+                        iterator = receiversList.iterator();
                     }
                 }
             }
